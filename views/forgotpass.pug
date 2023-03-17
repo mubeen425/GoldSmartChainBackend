@@ -1,0 +1,99 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(http-equiv="X-UA-Compatible", content="IE=edge")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Email Verified
+    style.
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        background-color: #f5f5f5;
+        text-align: center;
+        padding-top: 50px;
+      }
+      
+      h1 {
+        color: #1f88be;
+        font-size: 36px;
+        margin-bottom: 20px;
+      }
+      
+      p {
+        font-size: 18px;
+        margin-bottom: 20px;
+      }
+      
+      form {
+        display: inline-block;
+        width:400px;
+        text-align: left;
+      }
+      
+      label {
+        font-size: 18px;
+        display: block;
+        margin-bottom: 5px;
+      }
+      
+      input[type="password"] {
+        font-size: 16px;
+        padding: 10px;
+        width: 100%;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-bottom: 20px;
+      }
+      
+      button[type="submit"] {
+        background-color: #1f88be;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 18px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      
+      button[type="submit"]:hover {
+        background-color: #005b8e;
+      }
+      div{
+        margin-bottom:10px
+      }
+    script.
+      function validatePassword() {
+        let passs=""
+        const password = document.getElementById("password").value;
+        const confirmPassword = document.getElementById("confirm-password").value;
+        const passwordError = document.getElementById("password-error");
+        if (password !== confirmPassword) {
+          passwordError.textContent = "Passwords do not match";
+          return false;
+        }
+        if (password.length < 8) {
+          passwordError.textContent = "Password should be at least 8 characters long";
+          return false;
+        }
+        const regex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[,./#?!@$%^&*-])(?=.*[a-zA-Z]).{8,}$/gm;
+        if (!regex.test(password)) {
+          passwordError.textContent = "Password must be  8 character long and contain at least one uppercase one lowercase one special character and one number.";
+          return false;
+        }
+        passwordError.textContent = "";
+        return true;
+      }
+      
+      
+  body 
+    h1 Email Verified
+    p Your email address has been verified. Please enter a new password below:
+    form(action=`/api/user/passwordreset/${id}`, method="POST" onsubmit="return validatePassword();")
+      label(for="password") New Password:
+      input(type="password", id="password", name="password", required)
+      label(for="confirm-password") Confirm Password:
+      input(type="password", id="confirm-password", name="confirmpassword", required)
+      input(type="hidden", id="email", name="forgot", value= "true")
+      input(type="hidden", id="email", name="token", value= token)
+      div(style="color:red", id="password-error")
+      button(type="submit") Reset Password

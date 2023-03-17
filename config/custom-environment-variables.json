@@ -1,0 +1,21 @@
+{
+    "DBCONFIG": {
+      "HOST":"db_host",
+      "USERNAME": "db_username",
+        "PASSWORD": "db_password",
+        "PORT":"db_port",
+        "DATABASE":"db_name"
+      },
+      "mailconf":{
+        "user": "mail_gmail",
+        "pass": "mail_pass"
+      },
+      "adminPublicAdd":"admin_wallet_public_address",
+      "adminPrivateAdd":"admin_wallet_private_address",
+      "encryptionSecretKey":"enc_secret_key",
+      "MarketApi":"market_api",
+      "jwtPrivateKey":"jwt_key",
+      "baseurl":"base_url",
+      "SENDGRID_API_KEY":"mail_key",
+      "auth_user_email":"mail_user"
+    }
