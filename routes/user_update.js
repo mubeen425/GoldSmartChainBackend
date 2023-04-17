@@ -86,6 +86,16 @@ router.put("/:user_id", async (req, res) => {
       if (checkUsername)
         return res.status(400).send("User Name is already taken.");
     }
+    if (req.body.email) {
+      let checkEmail = await User.findOne({
+        where: { email: req.body.email },
+      })
+      if (checkEmail) {
+        return res.status(400).send("User already registered with this email.")
+      }else{
+        req.body.is_email_verified=false;
+      }
+    }
     const checkUser = await User.findOne({ where: { id: req.params.user_id } });
     if (!checkUser)
       return res.status(404).send("User Not Found With The Given Id.");
@@ -123,11 +133,11 @@ const passValidate = (req) => {
 
 function validateFieldsToUpdate(req) {
   const schema = Joi.object({
-    user_name: Joi.string().required().min(5).max(255),
-    first_name: Joi.string().required(),
-    last_name: Joi.string().required(),
-    contact: Joi.string().required(),
-    email: Joi.string().email().required(),
+    user_name: Joi.string().optional().min(5).max(255),
+    first_name: Joi.string().optional(),
+    last_name: Joi.string().optional(),
+    contact: Joi.string().optional(),
+    email: Joi.string().email().optional(),
   });
 
   return schema.validate(req);

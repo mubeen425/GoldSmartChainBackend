@@ -1,5 +1,6 @@
 const express = require("express");
 const { BankDetails, validateR } = require("../models/bankDetails");
+const { User } = require("../models/user");
 const router = express.Router();
 
 router.post("/", async (req, res) => {
@@ -18,10 +19,22 @@ router.post("/", async (req, res) => {
 
 router.get("/:userId", async (req, res) => {
   const userId = req.params.userId;
-
   try {
     const bankDetails = await BankDetails.findOne({
       where: { user_id: userId },
+      include: [
+        {
+          model: User,
+          as: "user",
+          attributes: [
+            "user_name",
+            "first_name",
+            "last_name",
+            "email",
+            "contact",
+          ],
+        },
+      ],
     });
 
     res.json(bankDetails);

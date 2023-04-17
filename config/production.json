@@ -1,26 +1,3 @@
 {
-  "en":"production",
-  "DBCONFIG": {
-    "USERNAME": "goldsmartchain",
-    "DATABASE":"admin_gold",
-    "PASSWORD":"f9ki*U7*9Qu#",
-    "HOST": "22350.hostserv.eu",
-    "PORT":"3306"
-    },
-      "cloudinary":{
-        "cloud_name": "mansoorcloud",
-        "api_key": "475838235114589",
-        "api_secret": "VqT5klF59dCMOLr58Xsnk2syymk"
-      },
-      "mailconf":{
-        "user": "Genesistech80@gmail.com",
-        "pass": "zgfmzzsupmeajwkf"
-      },
-      "adminPublicAdd":"0x40cab105165Ffac6A2df6Fd60BCbb92eb8657F8D",
-      "adminPrivateAdd":"0x8793700dfad313f01513eee0638343796c588e4bb1b58e7d3b9194f7b3d54d6b",
-      "encryptionSecretKey":"d6F3Efeq",
-      "jwtPrivateKey":"privateKey",
-      "MarketApi":"",
-      "baseurl":"https://hopeful-lederberg.185-178-192-38.plesk.page",
-      "SENDGRID_API_KEY":""
-    }
+  "en":"production"
+}

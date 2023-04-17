@@ -28,6 +28,9 @@ const SolidHisoty = connection.define(
     type: {
       type: DataTypes.STRING,
     },
+    currecytype:{
+      type:DataTypes.STRING,
+    },
     status:{
       type:DataTypes.STRING,
       defaultValue:"pending"

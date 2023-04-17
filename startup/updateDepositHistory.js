@@ -32,5 +32,27 @@ module.exports=async function getDepositHistory() {
       }
     }
 })
+
+provider.on('block', async (blockNumber) => {
+  const block = await provider.getBlock(blockNumber);
+  if (block.transactions.length > 0) {
+    for (let i = 0; i < block.transactions.length; i++) {
+      const tx = block.transactions[i];
+      const receipt = await provider.getTransaction(tx);
+      const users=await User.findAll();
+    for (const usr of users) {
+      if (receipt.to === usr.wallet_public_key) {
+        await DepositCrypto.create({
+          wallet_address: receipt.from,
+          token_name:"Stand",
+          amount:ethers.utils.formatUnits(receipt.value),
+          blockHash:receipt.blockHash,
+          user_id:usr.id
+        })
+      }
+    }
+    }
+  }
+});
 }
 

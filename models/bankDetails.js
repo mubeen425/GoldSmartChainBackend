@@ -46,9 +46,9 @@ BankDetails.belongsTo(User, {
 
 function validateR(req) {
   const schema = Joi.object({
-    bank_name: Joi.string().required(),
-    account_number: Joi.string().required(),
-    bic_swift: Joi.string().required(),
+    bank_name: Joi.string().optional(),
+    account_number: Joi.string().optional(),
+    bic_swift: Joi.string().optional(),
     user_id: Joi.number().integer().required(),
   });
 

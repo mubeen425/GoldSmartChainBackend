@@ -4,7 +4,9 @@ const nodemailer = require("nodemailer");
 
 function send(to, subject, text, verifyToken) {
   const transporter = nodemailer.createTransport({
-    service: "Gmail",
+    host: 'smtp.easyname.com',
+    port: 465,
+    secure: true,
     auth: config.get("mailconf"),
   });
   const message = {

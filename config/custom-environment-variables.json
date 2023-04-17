@@ -10,12 +10,15 @@
         "user": "mail_gmail",
         "pass": "mail_pass"
       },
+      "cloudinary":{
+        "cloud_name": "cloudinary_cloud_name",
+        "api_key": "cloudinary_api_key",
+        "api_secret": "cloudinary_api_secret"
+      },
       "adminPublicAdd":"admin_wallet_public_address",
       "adminPrivateAdd":"admin_wallet_private_address",
       "encryptionSecretKey":"enc_secret_key",
       "MarketApi":"market_api",
       "jwtPrivateKey":"jwt_key",
-      "baseurl":"base_url",
-      "SENDGRID_API_KEY":"mail_key",
-      "auth_user_email":"mail_user"
+      "baseurl":"base_url"
     }

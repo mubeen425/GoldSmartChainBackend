@@ -18,6 +18,8 @@ const {
 const { TransferStand } = require("../web3Integrations");
 const { LevelRewards } = require("../models/referal_rewards");
 const send = require("../utils/mailsend");
+const { getSolidBalance, getStandBalance } = require("../solid_stand_balance");
+const connection = require("../utils/connection");
 
 router.get("/getall", IsAdminOrUser, async (req, res) => {
   try {
@@ -107,6 +109,21 @@ router.post("/login", async (req, res) => {
     if (!validPassword)
       return res.status(400).send("Invalid email or password.");
 
+      const solid = await getSolidBalance(user.is_admin?config.get("adminPublicAdd"):user.wallet_public_key,DECRYPT(user.wallet_private_key));
+      const stand = await getStandBalance(user.is_admin?config.get("adminPublicAdd"):user.wallet_public_key);
+  
+      await connection.query(`
+    UPDATE solid_coins
+    SET solid_coin = ${solid}
+    WHERE user_id = ${user.id}
+  `);
+  
+      await connection.query(`
+    UPDATE stand_exchange
+    SET exchange_coin_amount = ${stand}
+    WHERE user_id = ${user.id}
+  `);
+    
     const token = user.generateJwtToken();
     return res.send({ status: true, access: token });
   } catch (error) {

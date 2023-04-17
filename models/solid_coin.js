@@ -42,6 +42,7 @@ function validateS(req) {
   const schema = Joi.object({
     solid_coin: Joi.required(),
     invest_amount: Joi.required(),
+    currecytype:Joi.required(),
     user_id: Joi.required(),
   });
 

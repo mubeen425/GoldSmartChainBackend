@@ -109,7 +109,7 @@ User.prototype.generateJwtToken = function () {
       is_active: this.is_active_user,
       is_email_verified: this.is_email_verified,
     },
-    config.get("jwtPrivateKey") || config.get("defaultjwtPrivateKey"),
+    config.get("jwtPrivateKey"),
     // {expiresIn:'5m'}
   );
 };

@@ -23,7 +23,6 @@ router.get("/", async (req, res) => {
 });
 
 router.put("/:id", async (req, res) => {
-  console.log("default level rewards");
   try {
     const { error } = validateAr(req.body);
     if (error) return res.status(400).send(error.details[0].message);

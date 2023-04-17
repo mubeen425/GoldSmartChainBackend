@@ -72,7 +72,6 @@ router.post("/buy", async (req, res) => {
     if (error) return res.status(400).send(error.details[0].message);
 
     const checkIfUser = await User.findOne({ where: { id: req.body.user_id } });
-
     const admin = await User.findOne({ where: { is_admin: true } });
 
     const invest_amount = Number(req.body.invest_amount);
@@ -81,6 +80,12 @@ router.post("/buy", async (req, res) => {
     if (solid_coin <= 0) return res.status(404).send("Invalid SOLID Amount");
     if (invest_amount <= 0) return res.status(406).send("Invalid USD Amount");
     if (!admin) return res.status(404).send("No admin account found.");
+
+    const pendingBuyRequests=await SolidHisoty.findAll({
+      where:{user_id:req.body.user_id,type:"Buy",status:"pending"}
+    })
+    if(pendingBuyRequests.length>10) return res.status(400).send("Please wait for your previous requests to be fulfilled before submitting another one.")
+
     req.body.type = "Buy";
     await SolidHisoty.create(req.body);
     return res.send("Request Initiated.");
@@ -150,6 +155,11 @@ router.put("/buyUpdate/:id", async (req, res) => {
     if (invest_amount <= 0) return res.status(406).send("Invalid USD Amount");
     if (!admin) return res.status(404).send("No admin account found.");
 
+    const adminSolidCoin = await SolidCoins.findOne({
+      where: { user_id: admin.id },
+    });
+
+    let admin_public_key = config.get("adminPublicAdd");
     let public_key = checkIfUser.wallet_public_key;
     let private_key=DECRYPT(checkIfUser.wallet_private_key);
     let admin_private_key = config.get("adminPrivateAdd");
@@ -165,8 +175,12 @@ router.put("/buyUpdate/:id", async (req, res) => {
       if (!err) {
         
       let solidval=await getSolidBalance(public_key,private_key);
+      let solidvalad=await getSolidBalance(admin_public_key,private_key);
+
         let sc = BigNumber(solidcoin.solid_coin).plus(req.body.solid_coin);
         solidcoin.solid_coin = solidval?solidval:sc.toFixed();
+        adminSolidCoin.solid_coin=solidvalad;
+        await adminSolidCoin.save();
         await solidcoin.save();
 
         if (checkIfUser.reference) {
@@ -286,6 +300,11 @@ router.put("/sellUpdate/:id", async (req, res) => {
 
     const admin = await User.findOne({ where: { is_admin: true } });
     if (!admin) return res.status(404).send("No admin account found.");
+
+    const adminSolidCoin = await SolidCoins.findOne({
+      where: { user_id: admin.id },
+    });
+
     if (!checkRequest) return res.status(404).send("Invalid Request.");
     if (!checkIfUser) return res.status(404).send("User Not Found.");
     if (!solidcoin)
@@ -320,8 +339,11 @@ router.put("/sellUpdate/:id", async (req, res) => {
 
         if (!err) {
           let solidval=await getSolidBalance(public_key,private_key);
+          let solidvalad=await getSolidBalance(admin_public_key,private_key);
           let soc = BigNumber(solidcoin.solid_coin).minus(req.body.solid_coin);
           solidcoin.solid_coin =solidval?solidval:soc.toFixed();
+          adminSolidCoin.solid_coin=solidvalad;
+          await adminSolidCoin.save();
           await solidcoin.save();
         } else {
           return res.status(404).send(err);

@@ -103,7 +103,6 @@ const SwapStandToSolidToken = async (amount, private_key,public_key) => {
       solidval=await getSolidBalance(public_key,private_key);
   } catch (error) {
     er = error.message;
-    console.log("web3",error);
   }
   return {er,solidval,standval};
 };
@@ -147,7 +146,6 @@ const swapSolidToSTandToken = async (amount, private_key,public_key) => {
     solidval=await getSolidBalance(public_key,private_key);
   } catch (error) {
     er = error.message;
-    console.log("web5",error);
   }
   return {er,solidval,standval};
 };

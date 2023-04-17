@@ -12,14 +12,14 @@
         "api_secret": "VqT5klF59dCMOLr58Xsnk2syymk"
       },
       "mailconf":{
-        "user": "sulaimanfarooqi526@gmail.com",
-        "pass": "faocwuftlurbrafj"
+        "user": "",
+        "pass": ""
       },
       "encryptionSecretKey":"d6F3Efeq",
       "adminPublicAdd":"0x40cab105165Ffac6A2df6Fd60BCbb92eb8657F8D",
       "adminPrivateAdd":"0x8793700dfad313f01513eee0638343796c588e4bb1b58e7d3b9194f7b3d54d6b",
       "jwtPrivateKey":"privateKey",
       "MarketApi":"",
-      "baseurl":"http://localhost:5000",
+      "baseurl":"http://localhost:8000",
       "SENDGRID_API_KEY":""
 }
